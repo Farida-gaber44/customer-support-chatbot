@@ -3,7 +3,7 @@ import google.generativeai as genai
 
 st.set_page_config(page_title="ShopBot", page_icon="🛍️", layout="centered")
 
-GEMINI_API_KEY = "YOUR_API_KEY_HERE"
+GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
 genai.configure(api_key=GEMINI_API_KEY)
 model = genai.GenerativeModel("gemini-2.0-flash-lite")
 
