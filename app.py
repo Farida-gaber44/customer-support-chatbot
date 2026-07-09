@@ -5,7 +5,7 @@ st.set_page_config(page_title="ShopBot", page_icon="🛍️", layout="centered")
 
 GEMINI_API_KEY = "YOUR_API_KEY_HERE"
 genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.5-flash-lite")
+model = genai.GenerativeModel("gemini-2.0-flash-lite")
 
 STORE_CONTEXT = """You are ShopBot for TechStore. Be detailed and helpful.
 Products: laptops($499+), phones($299+), tablets($199+), headphones($49+).
