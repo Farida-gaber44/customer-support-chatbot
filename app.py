@@ -1,11 +1,10 @@
 import streamlit as st
-import google.generativeai as genai
+from google import genai
 
 st.set_page_config(page_title="ShopBot", page_icon="🛍️", layout="centered")
 
 GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-genai.configure(api_key=GEMINI_API_KEY)
-model = genai.GenerativeModel("gemini-2.0-flash-lite")
+client = genai.Client(api_key=GEMINI_API_KEY)
 
 STORE_CONTEXT = """You are ShopBot for TechStore. Be detailed and helpful.
 Products: laptops($499+), phones($299+), tablets($199+), headphones($49+).
@@ -29,7 +28,10 @@ if prompt := st.chat_input("Type your question..."):
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             full_prompt = f"{STORE_CONTEXT}\n\nCustomer: {prompt}\nShopBot:"
-            response = model.generate_content(full_prompt)
+            response = client.models.generate_content(
+                model="gemini-2.0-flash",
+                contents=full_prompt
+            )
             reply = response.text
             st.markdown(reply)
 
