@@ -3,10 +3,9 @@ from google import genai
 
 st.set_page_config(page_title="ShopBot", page_icon="🛍️", layout="centered")
 
-GEMINI_API_KEY = st.secrets["GEMINI_API_KEY"]
-client = genai.Client(api_key=GEMINI_API_KEY)
+client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
 
-STORE_CONTEXT = """You are ShopBot for TechStore. Be detailed and helpful.
+STORE_CONTEXT = """You are ShopBot for TechStore. Be helpful and brief.
 Products: laptops($499+), phones($299+), tablets($199+), headphones($49+).
 Shipping: free above $50, 3-5 days. Returns: 14 days. Email: support@techstore.com"""
 
