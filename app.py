@@ -27,7 +27,7 @@ if prompt := st.chat_input("Type your question..."):
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
             response = client.chat.completions.create(
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant",
                 messages=[
                     {"role": "system", "content": STORE_CONTEXT},
                     {"role": "user", "content": prompt}
