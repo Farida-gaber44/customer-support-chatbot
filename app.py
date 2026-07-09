@@ -1,9 +1,9 @@
 import streamlit as st
-from google import genai
+from groq import Groq
 
 st.set_page_config(page_title="ShopBot", page_icon="🛍️", layout="centered")
 
-client = genai.Client(api_key=st.secrets["GEMINI_API_KEY"])
+client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
 STORE_CONTEXT = """You are ShopBot for TechStore. Be helpful and brief.
 Products: laptops($499+), phones($299+), tablets($199+), headphones($49+).
@@ -26,12 +26,14 @@ if prompt := st.chat_input("Type your question..."):
 
     with st.chat_message("assistant"):
         with st.spinner("Thinking..."):
-            full_prompt = f"{STORE_CONTEXT}\n\nCustomer: {prompt}\nShopBot:"
-            response = client.models.generate_content(
-                model="gemini-2.0-flash",
-                contents=full_prompt
+            response = client.chat.completions.create(
+                model="llama3-8b-8192",
+                messages=[
+                    {"role": "system", "content": STORE_CONTEXT},
+                    {"role": "user", "content": prompt}
+                ]
             )
-            reply = response.text
+            reply = response.choices[0].message.content
             st.markdown(reply)
 
     st.session_state.messages.append({"role": "assistant", "content": reply})
@@ -41,4 +43,4 @@ if st.button("🗑️ Clear Chat"):
     st.rerun()
 
 st.markdown("---")
-st.caption("Powered by Gemini AI | TechStore")
+st.caption("Powered by Groq & LLaMA3 | TechStore")
